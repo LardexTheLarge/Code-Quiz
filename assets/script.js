@@ -28,15 +28,15 @@ h1El.setAttribute("style", "background-color: #2b2bff; margin:0;");
 listEl.setAttribute("style", "list-style: none; display:inline;");
 li1.setAttribute(
   "style",
-  "border: 1px solid #040080; text-align:center; margin: 2px 0;"
+  "border: 1px solid #040080; text-align:center; margin: 2px 0; color: white;"
 );
 li2.setAttribute(
   "style",
-  "border: 1px solid #040080; text-align:center; margin: 2px 0;"
+  "border: 1px solid #040080; text-align:center; margin: 2px 0; color: white;"
 );
 li3.setAttribute(
   "style",
-  "border: 1px solid #040080; text-align:center; margin: 2px 0;"
+  "border: 1px solid #040080; text-align:center; margin: 2px 0; color: white;"
 );
 startBtn.setAttribute(
   "style",
@@ -86,11 +86,11 @@ var testQuestions = [
   },
 ];
 
-// var gIndex = 0;
-// for (let i = 0; i < testQuestions[gIndex].answers.length; i++) {
-//   Code to create button elements, add text based off of
-//   testQuestions[gIndex].answers[i];
-// }
+var gIndex = 0;
+for (let i = 0; i < testQuestions[gIndex].answers.length; i++) {
+  // Code to create button elements, add text based off of
+  testQuestions[gIndex].answers[i];
+}
 
 function questionPrompt() {
   document.body.appendChild(mainEl);
@@ -101,12 +101,14 @@ function questionPrompt() {
   listEl.appendChild(li3);
 
   for (var i = 0; i < testQuestions.length; i++) {
-    h1El.textContent = testQuestions[i].question;
-    li1.textContent = answers.a;
-    li2.textContent = answers.b;
-    li3.textContent = answers.c;
+    h1El.textContent = testQuestions[0].question;
+    li1.textContent = testQuestions[0].answers.a;
+    li2.textContent = testQuestions[0].answers.b;
+    li3.textContent = testQuestions[0].answers.c;
   }
+
   introText.textContent = "";
+  startBtn.setAttribute("style", "display: none;");
 }
 
 function start() {
