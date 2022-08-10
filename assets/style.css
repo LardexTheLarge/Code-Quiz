@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: gray;
+  margin: 0%;
+  padding: 0;
+}
+
+header {
+  background-color: blue;
+  display: flex;
+  padding: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h1,
+h2 {
+  color: white;
+}
