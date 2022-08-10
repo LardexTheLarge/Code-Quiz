@@ -1,6 +1,7 @@
 //variables
 var body = document.body;
 var mainEl = document.createElement("main");
+var startDiv = document.createElement("div");
 
 //question element
 var h1El = document.createElement("h1");
@@ -11,17 +12,13 @@ var li1 = document.createElement("li");
 var li2 = document.createElement("li");
 var li3 = document.createElement("li");
 
-h1El.textContent = "Question";
-li1.textContent = "answer a";
-li2.textContent = "answer b";
-li3.textContent = "answer c";
+//start button and intro text
+var startBtn = document.createElement("button");
+var introText = document.createElement("p");
 
-document.body.appendChild(mainEl);
-mainEl.appendChild(h1El);
-mainEl.appendChild(listEl);
-listEl.appendChild(li1);
-listEl.appendChild(li2);
-listEl.appendChild(li3);
+document.body.appendChild(startDiv);
+startDiv.appendChild(introText);
+startDiv.appendChild(startBtn);
 
 mainEl.setAttribute(
   "style",
@@ -40,6 +37,14 @@ li2.setAttribute(
 li3.setAttribute(
   "style",
   "border: 1px solid #040080; text-align:center; margin: 2px 0;"
+);
+startBtn.setAttribute(
+  "style",
+  "width: 50px; height: 20px; color: white; background-color: blue; "
+);
+startDiv.setAttribute(
+  "style",
+  "display: grid; justify-content: center; justify-items: center;"
 );
 
 var testQuestions = [
@@ -81,4 +86,36 @@ var testQuestions = [
   },
 ];
 
-function questionPrompt() {}
+// var gIndex = 0;
+// for (let i = 0; i < testQuestions[gIndex].answers.length; i++) {
+//   Code to create button elements, add text based off of
+//   testQuestions[gIndex].answers[i];
+// }
+
+function questionPrompt() {
+  document.body.appendChild(mainEl);
+  mainEl.appendChild(h1El);
+  mainEl.appendChild(listEl);
+  listEl.appendChild(li1);
+  listEl.appendChild(li2);
+  listEl.appendChild(li3);
+
+  for (var i = 0; i < testQuestions.length; i++) {
+    h1El.textContent = testQuestions[i].question;
+    li1.textContent = answers.a;
+    li2.textContent = answers.b;
+    li3.textContent = answers.c;
+  }
+  introText.textContent = "";
+}
+
+function start() {
+  introText.textContent = "Press Start to begin test";
+  startBtn.textContent = "Start";
+
+  // starts test
+  startBtn.addEventListener("click", function () {
+    questionPrompt();
+  });
+}
+start();
