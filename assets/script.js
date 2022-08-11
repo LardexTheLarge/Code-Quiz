@@ -89,11 +89,11 @@ var testQuestions = [
   },
 ];
 
-// var gIndex = 0;
-// for (let i = 0; i < testQuestions[gIndex].answers.length; i++) {
-// //   Code to create button elements, add text based off of
-//   testQuestions[gIndex].answers[i];
-// }
+var gIndex = 0;
+for (let i = 0; i < testQuestions[gIndex].answers; i++) {
+  //   Code to create button elements, add text based off of
+  testQuestions[gIndex].answers[i];
+}
 
 function questionPrompt() {
   document.body.appendChild(mainEl);
@@ -104,11 +104,10 @@ function questionPrompt() {
   listEl.appendChild(li3);
 
   for (var i = 0; i < testQuestions.length; i++) {
-    h1El.textContent = testQuestions[i].question;
-    li1.textContent = testQuestions[i].answers.a;
-    li2.textContent = testQuestions[i].answers.b;
-    li3.textContent = testQuestions[i].answers.c;
-    console.log(testQuestions[i].answers);
+    h1El.textContent = testQuestions[gIndex].question;
+    li1.textContent = testQuestions[gIndex].answers.a;
+    li2.textContent = testQuestions[gIndex].answers.b;
+    li3.textContent = testQuestions[gIndex].answers.c;
   }
 
   // btn eventlistener
