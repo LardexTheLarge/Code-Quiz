@@ -4,12 +4,12 @@ core - user takes a test and is timed. score is time
 remaining on timer and score is saved to local storage and user 
 can compare to other highscores.
 
-first - try to get questions to show up
+first - try to get questions to show up -- yes
 
-second - get timer to work
+second - get timer to work-- yes/half
 
-third - if question is wrong take time off timer
+third - if question is wrong take time off timer -- no
 
-forth - if timer ends or all questions are answered quiz ends
+forth - if timer ends or all questions are answered quiz ends -- yes/half
 
-fifth - once quiz ends record score id and save to local storage
+fifth - once quiz ends record score id and save to local storage --yes/half

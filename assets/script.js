@@ -20,10 +20,13 @@ var introText = document.createElement("p");
 //timer
 var timerEl = document.getElementById("time");
 
-//submit button and input initials
+//submit button and input initials and LeaderBoard
 var inputInitials = document.createElement("input");
 var saveBtn = document.createElement("button");
 var endText = document.createElement("p");
+var highScoreText = document.createElement("h2");
+var leaderBoardList = document.createElement("ul");
+var leaderBoardUser = document.createElement("li");
 
 //Start test screen
 document.body.appendChild(startDiv);
@@ -55,6 +58,19 @@ startBtn.setAttribute(
 startDiv.setAttribute(
   "style",
   "display: grid; justify-content: center; justify-items: center;"
+);
+endDiv.setAttribute(
+  "style",
+  "display: grid; justify-content: center; justify-items: center;"
+);
+saveBtn.setAttribute(
+  "style",
+  "width: 50px; height: 20px; color: white; background-color: blue; cursor: pointer; margin-top: 3px"
+);
+leaderBoardList.setAttribute("style", "list-style: none; display:inline;");
+leaderBoardUser.setAttribute(
+  "style",
+  "border: 1px solid #005eff; text-align:center; margin: 2px 0; color: white;"
 );
 
 var testQuestions = [
@@ -147,7 +163,7 @@ function start() {
   startBtn.addEventListener("click", function () {
     //TODO: un-comment timer
     countdown();
-    questionPrompt();
+    // questionPrompt();
   });
 }
 start();
@@ -164,6 +180,8 @@ function countdown() {
       timerEl.textContent = "0";
       // Stops execution of action at set interval
       clearInterval(timeInterval);
+      //TODO: un-comment end screen
+      // endQuiz();
     }
   }, 1000);
 }
@@ -174,6 +192,29 @@ function endQuiz() {
   endDiv.appendChild(endText);
   endDiv.appendChild(inputInitials);
   endDiv.appendChild(saveBtn);
+  endDiv.appendChild(highScoreText);
+  endDiv.appendChild(leaderBoardList);
+  leaderBoardList.appendChild(leaderBoardUser);
 
+  //user inputs initials
   endText.textContent = "Enter your initials to save score";
+  saveBtn.textContent = "Save";
+  highScoreText.textContent = "HighScores";
+
+  //takes away start screen
+  introText.textContent = "";
+  startBtn.setAttribute("style", "display: none;");
+
+  var userInitials = localStorage.getItem("userInitials");
+  userInitials = document.getElementsByTagName(inputInitials).value;
+
+  saveBtn.addEventListener("click", function () {
+    if (inputInitials.value !== "") {
+      inputInitials.value.textContent = leaderBoardUser;
+      localStorage.setItem("userInitials", userInitials);
+      console.log(inputInitials.value);
+    }
+  });
 }
+
+endQuiz();
