@@ -2,6 +2,7 @@
 var body = document.body;
 var mainEl = document.createElement("main");
 var startDiv = document.createElement("div");
+var endDiv = document.createElement("div");
 
 //question element
 var h1El = document.createElement("h1");
@@ -19,6 +20,12 @@ var introText = document.createElement("p");
 //timer
 var timerEl = document.getElementById("time");
 
+//submit button and input initials
+var inputInitials = document.createElement("input");
+var saveBtn = document.createElement("button");
+var endText = document.createElement("p");
+
+//Start test screen
 document.body.appendChild(startDiv);
 startDiv.appendChild(introText);
 startDiv.appendChild(startBtn);
@@ -89,9 +96,10 @@ var testQuestions = [
   },
 ];
 
+//Global scope Index
 var gIndex = 0;
 for (let i = 0; i < testQuestions[gIndex].answers; i++) {
-  //   Code to create button elements, add text based off of
+  // Code to create button elements, add text based off of
   testQuestions[gIndex].answers[i];
 }
 
@@ -103,26 +111,25 @@ function questionPrompt() {
   listEl.appendChild(li2);
   listEl.appendChild(li3);
 
-  for (var i = 0; i < testQuestions.length; i++) {
-    h1El.textContent = testQuestions[gIndex].question;
-    li1.textContent = testQuestions[gIndex].answers.a;
-    li2.textContent = testQuestions[gIndex].answers.b;
-    li3.textContent = testQuestions[gIndex].answers.c;
-  }
+  //layout for Q and A
+  h1El.textContent = testQuestions[gIndex].question;
+  li1.textContent = testQuestions[gIndex].answers.a;
+  li2.textContent = testQuestions[gIndex].answers.b;
+  li3.textContent = testQuestions[gIndex].answers.c;
 
   // btn eventlistener
   li1.addEventListener("click", function () {
-    testQuestions[i].correctAnswer == testQuestions[i].answers.a
+    testQuestions[gIndex].correctAnswer == testQuestions[gIndex].answers.a
       ? alert("right answer")
       : alert("wrong Answer -10 seconds");
   });
   li2.addEventListener("click", function () {
-    testQuestions[i].correctAnswer == testQuestions[i].answers.b
+    testQuestions[gIndex].correctAnswer == testQuestions[gIndex].answers.b
       ? alert("right answer")
       : alert("wrong Answer -10 seconds");
   });
   li3.addEventListener("click", function () {
-    testQuestions[i].correctAnswer == testQuestions[i].answers.c
+    testQuestions[gIndex].correctAnswer == testQuestions[gIndex].answers.c
       ? alert("right answer")
       : alert("wrong Answer -10 seconds");
   });
@@ -138,27 +145,35 @@ function start() {
 
   // starts test
   startBtn.addEventListener("click", function () {
-    //TODO: un comment timer
-    // countdown();
+    //TODO: un-comment timer
+    countdown();
     questionPrompt();
   });
 }
 start();
 
+var timeLeft;
 function countdown() {
-  var timeLeft = 50;
+  timeLeft = 5;
 
   var timeInterval = setInterval(function () {
-    //
-    // YOUR CODE HERE
-    //
     if (timeLeft >= 1) {
       timeLeft--;
       timerEl.textContent = timeLeft;
     } else {
-      timerEl.textContent = " ";
+      timerEl.textContent = "0";
       // Stops execution of action at set interval
       clearInterval(timeInterval);
     }
   }, 1000);
+}
+
+function endQuiz() {
+  //end test screen
+  document.body.appendChild(endDiv);
+  endDiv.appendChild(endText);
+  endDiv.appendChild(inputInitials);
+  endDiv.appendChild(saveBtn);
+
+  endText.textContent = "Enter your initials to save score";
 }
