@@ -70,7 +70,7 @@ saveBtn.setAttribute(
 leaderBoardList.setAttribute("style", "list-style: none; display:inline;");
 leaderBoardUser.setAttribute(
   "style",
-  "border: 1px solid #005eff; text-align:center; margin: 2px 0; color: white;"
+  "border: 1px solid white; text-align:center; margin: 2px 0px; color: white; padding: 2px 5px; background-color: blue;"
 );
 
 var testQuestions = [
@@ -194,7 +194,6 @@ function endQuiz() {
   endDiv.appendChild(saveBtn);
   endDiv.appendChild(highScoreText);
   endDiv.appendChild(leaderBoardList);
-  leaderBoardList.appendChild(leaderBoardUser);
 
   //user inputs initials
   endText.textContent = "Enter your initials to save score";
@@ -205,14 +204,16 @@ function endQuiz() {
   introText.textContent = "";
   startBtn.setAttribute("style", "display: none;");
 
+  //calls from local storage
   var userInitials = localStorage.getItem("userInitials");
-  userInitials = document.getElementsByTagName(inputInitials).value;
 
+  //sets initials to local storage on click
   saveBtn.addEventListener("click", function () {
     if (inputInitials.value !== "") {
-      inputInitials.value.textContent = leaderBoardUser;
-      localStorage.setItem("userInitials", userInitials);
-      console.log(inputInitials.value);
+      leaderBoardList.appendChild(leaderBoardUser);
+      leaderBoardUser.textContent = inputInitials.value;
+      localStorage.setItem("userInitials", leaderBoardUser.textContent);
+      console.log(leaderBoardUser.textContent);
     }
   });
 }
