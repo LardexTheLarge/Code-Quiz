@@ -81,7 +81,7 @@ var testQuestions = [
       b: "スペースゴジラ",
       c: "ゴジラ",
     },
-    correctAnswer: "c",
+    correctAnswer: "ゴジラ",
   },
   {
     question: "How did Godzilla's story come to be created?",
@@ -90,7 +90,7 @@ var testQuestions = [
       b: "WWII when Japan got nuked by the US military",
       c: "Godzilla is a real story",
     },
-    correctAnswer: "b",
+    correctAnswer: "WWII when Japan got nuked by the US military",
   },
   {
     question: "Who is Godzilla's friend?",
@@ -99,7 +99,7 @@ var testQuestions = [
       b: "King Ghidorah",
       c: "King Kong",
     },
-    correctAnswer: "a",
+    correctAnswer: "Angirus",
   },
   {
     question: "The first Godzilla movie aired in what year?",
@@ -108,7 +108,7 @@ var testQuestions = [
       b: "1954",
       c: "1956",
     },
-    correctAnswer: "b",
+    correctAnswer: "1954",
   },
 ];
 
@@ -133,25 +133,40 @@ function questionPrompt() {
   li2.textContent = testQuestions[gIndex].answers.b;
   li3.textContent = testQuestions[gIndex].answers.c;
 
+  // h1El.addEventListener("click", function () {
+  //   checkAns(testQuestions[gIndex].answers.a);
+  // });
   // btn eventlistener
   li1.addEventListener("click", function () {
-    testQuestions[gIndex].correctAnswer == testQuestions[gIndex].answers.a
-      ? alert("right answer")
-      : alert("wrong Answer -10 seconds");
+    checkAns(testQuestions[gIndex].answers.a);
   });
   li2.addEventListener("click", function () {
-    testQuestions[gIndex].correctAnswer == testQuestions[gIndex].answers.b
-      ? alert("right answer")
-      : alert("wrong Answer -10 seconds");
+    checkAns(testQuestions[gIndex].answers.b);
   });
+
   li3.addEventListener("click", function () {
-    testQuestions[gIndex].correctAnswer == testQuestions[gIndex].answers.c
-      ? alert("right answer")
-      : alert("wrong Answer -10 seconds");
+    checkAns(testQuestions[gIndex].answers.c);
   });
 
   introText.textContent = "";
   startBtn.setAttribute("style", "display: none;");
+}
+
+function checkAns(selectedAns) {
+  if (testQuestions[gIndex].correctAnswer === selectedAns) {
+    gIndex = gIndex + 1;
+    h1El.textContent = testQuestions[gIndex].question;
+    li1.textContent = testQuestions[gIndex].answers.a;
+    li2.textContent = testQuestions[gIndex].answers.b;
+    li3.textContent = testQuestions[gIndex].answers.c;
+  } else {
+    gIndex = gIndex + 1;
+    alert("wrong Answer -10 seconds");
+    h1El.textContent = testQuestions[gIndex].question;
+    li1.textContent = testQuestions[gIndex].answers.a;
+    li2.textContent = testQuestions[gIndex].answers.b;
+    li3.textContent = testQuestions[gIndex].answers.c;
+  }
 }
 
 //This function calls to the questions and starts the test
@@ -163,25 +178,25 @@ function start() {
   startBtn.addEventListener("click", function () {
     //TODO: un-comment timer
     countdown();
-    // questionPrompt();
+    questionPrompt();
   });
 }
 start();
 
 var timeLeft;
 function countdown() {
-  timeLeft = 5;
+  timeLeft = 50;
 
   var timeInterval = setInterval(function () {
     if (timeLeft >= 1) {
       timeLeft--;
       timerEl.textContent = timeLeft;
     } else {
-      timerEl.textContent = "0";
+      timerEl.textContent = timeLeft;
       // Stops execution of action at set interval
       clearInterval(timeInterval);
       //TODO: un-comment end screen
-      // endQuiz();
+      endQuiz();
     }
   }, 1000);
 }
@@ -210,12 +225,14 @@ function endQuiz() {
   //sets initials to local storage on click
   saveBtn.addEventListener("click", function () {
     if (inputInitials.value !== "") {
+      //element of user initials and score
       leaderBoardList.appendChild(leaderBoardUser);
-      leaderBoardUser.textContent = inputInitials.value;
+
+      leaderBoardUser.textContent = inputInitials.value + " -- score";
       localStorage.setItem("userInitials", leaderBoardUser.textContent);
       console.log(leaderBoardUser.textContent);
     }
   });
 }
 
-endQuiz();
+// endQuiz();
