@@ -113,17 +113,17 @@ function questionPrompt() {
 
   // btn eventlistener
   li1.addEventListener("click", function () {
-    testQuestions[i].correctAnswer === testQuestions[i].answers.a
+    testQuestions[i].correctAnswer == testQuestions[i].answers.a
       ? alert("right answer")
       : alert("wrong Answer -10 seconds");
   });
   li2.addEventListener("click", function () {
-    testQuestions[i].correctAnswer === testQuestions[i].answers.b
+    testQuestions[i].correctAnswer == testQuestions[i].answers.b
       ? alert("right answer")
       : alert("wrong Answer -10 seconds");
   });
   li3.addEventListener("click", function () {
-    testQuestions[i].correctAnswer === testQuestions[i].answers.c
+    testQuestions[i].correctAnswer == testQuestions[i].answers.c
       ? alert("right answer")
       : alert("wrong Answer -10 seconds");
   });
@@ -139,7 +139,7 @@ function start() {
 
   // starts test
   startBtn.addEventListener("click", function () {
-    //TODO: add timer
+    //TODO: un comment timer
     // countdown();
     questionPrompt();
   });
@@ -155,8 +155,7 @@ function countdown() {
     //
     if (timeLeft >= 1) {
       timeLeft--;
-      timerEl.textContent = "Time: " + timeLeft;
-      console.log(timeLeft);
+      timerEl.textContent = timeLeft;
     } else {
       timerEl.textContent = " ";
       // Stops execution of action at set interval
