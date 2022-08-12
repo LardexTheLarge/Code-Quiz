@@ -22,6 +22,7 @@ var timerEl = document.getElementById("time");
 
 //submit button and input initials and LeaderBoard
 var inputInitials = document.createElement("input");
+inputInitials.id = "inputInitials";
 var saveBtn = document.createElement("button");
 var endText = document.createElement("p");
 var highScoreText = document.createElement("h2");
@@ -119,6 +120,7 @@ for (let i = 0; i < testQuestions[gIndex].answers; i++) {
   testQuestions[gIndex].answers[i];
 }
 
+//shows the questions in testQuestions in array
 function questionPrompt() {
   document.body.appendChild(mainEl);
   mainEl.appendChild(h1El);
@@ -133,9 +135,6 @@ function questionPrompt() {
   li2.textContent = testQuestions[gIndex].answers.b;
   li3.textContent = testQuestions[gIndex].answers.c;
 
-  // h1El.addEventListener("click", function () {
-  //   checkAns(testQuestions[gIndex].answers.a);
-  // });
   // btn eventlistener
   li1.addEventListener("click", function () {
     checkAns(testQuestions[gIndex].answers.a);
@@ -152,6 +151,8 @@ function questionPrompt() {
   startBtn.setAttribute("style", "display: none;");
 }
 
+//this function checks if the correctAnswer of the testQuestions array is
+//correct and moves on to the next question and if user gets it wrong goes to the next question in array
 function checkAns(selectedAns) {
   if (testQuestions[gIndex].correctAnswer === selectedAns) {
     gIndex = gIndex + 1;
@@ -159,7 +160,7 @@ function checkAns(selectedAns) {
     li1.textContent = testQuestions[gIndex].answers.a;
     li2.textContent = testQuestions[gIndex].answers.b;
     li3.textContent = testQuestions[gIndex].answers.c;
-  } else {
+  } else if (testQuestions[gIndex].correctAnswer !== selectedAns) {
     gIndex = gIndex + 1;
     alert("wrong Answer -10 seconds");
     h1El.textContent = testQuestions[gIndex].question;
@@ -177,22 +178,22 @@ function start() {
   // starts test
   startBtn.addEventListener("click", function () {
     //TODO: un-comment timer
-    countdown();
-    questionPrompt();
+    // countdown();
+    // questionPrompt();
   });
 }
 start();
 
 var timeLeft;
 function countdown() {
-  timeLeft = 50;
+  timeLeft = 5;
 
   var timeInterval = setInterval(function () {
     if (timeLeft >= 1) {
       timeLeft--;
       timerEl.textContent = timeLeft;
     } else {
-      timerEl.textContent = timeLeft;
+      timerEl.textContent = "0";
       // Stops execution of action at set interval
       clearInterval(timeInterval);
       //TODO: un-comment end screen
@@ -219,20 +220,46 @@ function endQuiz() {
   introText.textContent = "";
   startBtn.setAttribute("style", "display: none;");
 
-  //calls from local storage
-  var userInitials = localStorage.getItem("userInitials");
+  //removes questionPrompts
+  h1El.setAttribute("style", "display: none;");
+  mainEl.setAttribute("style", "display: none;");
+  listEl.setAttribute("style", "display: none;");
+  li1.setAttribute("style", "display: none;");
+  li2.setAttribute("style", "display: none;");
+  li3.setAttribute("style", "display: none;");
 
   //sets initials to local storage on click
-  saveBtn.addEventListener("click", function () {
+  saveBtn.addEventListener("click", function (event) {
+    event.preventDefault();
     if (inputInitials.value !== "") {
       //element of user initials and score
       leaderBoardList.appendChild(leaderBoardUser);
-
-      leaderBoardUser.textContent = inputInitials.value + " -- score";
-      localStorage.setItem("userInitials", leaderBoardUser.textContent);
-      console.log(leaderBoardUser.textContent);
+      //gets the element created by id called inputInitials and its value and puts it into an array
+      var userInitials = document.getElementById("inputInitials").value;
+      //set the userInitials to the local storage
+      localStorage.setItem("user Initials", JSON.stringify(userInitials));
+      renderInitials();
     }
   });
 }
 
-// endQuiz();
+//this function is responsible for rendering the values stored in local storage
+function renderInitials() {
+  //gets the user initials from the local storage
+  var userInitials = localStorage.getItem("user Initials");
+  //userInitials from local storage is displayed to user in the highscores
+  leaderBoardUser.textContent = userInitials + " -- score";
+
+  //
+  for (var i = 0; i < userInitials.length; i++) {
+    var userInitials = userInitials[i];
+
+    leaderBoardList.appendChild(leaderBoardUser);
+    leaderBoardUser.textContent = userInitials;
+    leaderBoardUser.setAttribute("data-index", i);
+
+    leaderBoardList.appendChild(leaderBoardUser);
+  }
+}
+
+endQuiz();
