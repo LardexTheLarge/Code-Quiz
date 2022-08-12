@@ -1,7 +1,7 @@
 # Code-Quiz
 
 description:
-This is my code quiz but it is Godzilla themed. I built almost all of it through JavaScript, I added all interactive elements with Create element functions and appended them to the right spots and used the set Attribute to customize it all. The start makes sure 
+This is my code quiz but it is Godzilla themed. I built almost all of it through JavaScript, I added all interactive elements with Create element functions and appended them to the right spots and used the set Attribute to customize it all. The start makes sure a star button shows up and introduction text, once the start is clicked it calls the timer and questions to the web page. next, if the user answers the questions right it moves the user to the next question and set of answers, if the user gets an answer wrong then it takes time of the timer. finally, the users score is time left on the timer and the user can save their score and initials to the local storage and it gets the items from local storage if the user refreshs and starts the test again.
 
 
 web page
@@ -19,3 +19,4 @@ code
 
 
 web link
+https://lardexthelarge.github.io/Code-Quiz/
