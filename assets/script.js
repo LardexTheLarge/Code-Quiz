@@ -151,24 +151,29 @@ function questionPrompt() {
 //correct and moves on to the next question and if user gets it wrong goes to the next question in array
 function checkAns(selectedAns) {
   if (testQuestions[gIndex].correctAnswer === selectedAns) {
-    if (gIndex == 3) {
+    if (gIndex == testQuestions.length - 1) {
       endQuiz();
       return;
     }
-
     gIndex = gIndex + 1;
     h1El.textContent = testQuestions[gIndex].question;
     li1.textContent = testQuestions[gIndex].answers.a;
     li2.textContent = testQuestions[gIndex].answers.b;
     li3.textContent = testQuestions[gIndex].answers.c;
   } else if (testQuestions[gIndex].correctAnswer !== selectedAns) {
-    gIndex = gIndex + 1;
+    console.log("subtract Time");
+    timeLeft = timeLeft - 10;
     alert("wrong Answer -10 seconds");
-    h1El.textContent = testQuestions[gIndex].question;
-    li1.textContent = testQuestions[gIndex].answers.a;
-    li2.textContent = testQuestions[gIndex].answers.b;
-    li3.textContent = testQuestions[gIndex].answers.c;
-    timeLeft - 10;
+
+    if (gIndex < testQuestions.length - 1) {
+      gIndex = gIndex + 1;
+      h1El.textContent = testQuestions[gIndex].question;
+      li1.textContent = testQuestions[gIndex].answers.a;
+      li2.textContent = testQuestions[gIndex].answers.b;
+      li3.textContent = testQuestions[gIndex].answers.c;
+    } else {
+      endQuiz();
+    }
   }
 }
 
@@ -179,7 +184,6 @@ function start() {
 
   // starts test
   startBtn.addEventListener("click", function () {
-    //TODO: un-comment timer
     countdown();
     questionPrompt();
   });
@@ -198,7 +202,6 @@ function countdown() {
       timerEl.textContent = "0";
       // Stops execution of action at set interval
       clearInterval(timeInterval);
-      //TODO: un-comment end screen
       endQuiz();
     }
   }, 1000);
@@ -206,6 +209,7 @@ function countdown() {
 
 var timeInterval;
 function endQuiz() {
+  timerEl.textContent = timeLeft;
   //end test screen
   document.body.appendChild(endDiv);
   endDiv.appendChild(endText);
@@ -236,21 +240,19 @@ function endQuiz() {
   saveBtn.addEventListener("click", function (event) {
     event.preventDefault();
     if (inputInitials.value !== "") {
-      //gets the element created by id called inputInitials and its value and puts it into an array
+      //gets the element created by id called inputInitials and its value
       var userInitials = document.getElementById("inputInitials").value;
       inputInitials.value = "";
-      //gets the user initials from the local storage
+      //parses userInitials and userTime and puts it in an array
       var parsedInitials =
         JSON.parse(localStorage.getItem("userInitials")) || [];
       parsedInitials.push(userInitials);
-
       var parsedTime = JSON.parse(localStorage.getItem("userTime")) || [];
       parsedTime.push(timeLeft);
 
       //set the userInitials to the local storage
       localStorage.setItem("userInitials", JSON.stringify(parsedInitials));
       localStorage.setItem("userTime", JSON.stringify(parsedTime));
-
       renderInitials();
     }
   });
@@ -265,7 +267,7 @@ function renderInitials() {
     var userInitials = parsedInitials[i];
     var timeLeft = parsedTime[i];
 
-    //userInitials from local storage is displayed to user in the highscores
+    //takes userInitials and score from local storage is displayed to user in the highscores
     var leaderBoardUser = document.createElement("li");
     leaderBoardUser.setAttribute(
       "style",
