@@ -1,7 +1,9 @@
+/* Universal selectors */
 * {
   box-sizing: border-box;
 }
 
+/* element selectors */
 body {
   background-color: gray;
   margin: 0%;

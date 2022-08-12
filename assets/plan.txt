@@ -6,10 +6,10 @@ can compare to other highscores.
 
 first - try to get questions to show up -- yes
 
-second - get timer to work-- yes/half
+second - get timer to work-- yes
 
 third - if question is wrong take time off timer -- no
 
-forth - if timer ends or all questions are answered quiz ends -- yes/half
+forth - if timer ends or all questions are answered quiz ends -- yes
 
-fifth - once quiz ends record score id and save to local storage --yes/half
+fifth - once quiz ends record score id and save to local storage --yes

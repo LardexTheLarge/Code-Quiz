@@ -19,6 +19,7 @@ var introText = document.createElement("p");
 
 //timer
 var timerEl = document.getElementById("time");
+timerEl.id = "timer";
 
 //submit button and input initials and LeaderBoard
 var inputInitials = document.createElement("input");
@@ -27,7 +28,6 @@ var saveBtn = document.createElement("button");
 var endText = document.createElement("p");
 var highScoreText = document.createElement("h2");
 var leaderBoardList = document.createElement("ul");
-var leaderBoardUser = document.createElement("li");
 
 //Start test screen
 document.body.appendChild(startDiv);
@@ -69,10 +69,6 @@ saveBtn.setAttribute(
   "width: 50px; height: 20px; color: white; background-color: blue; cursor: pointer; margin-top: 3px"
 );
 leaderBoardList.setAttribute("style", "list-style: none; display:inline;");
-leaderBoardUser.setAttribute(
-  "style",
-  "border: 1px solid white; text-align:center; margin: 2px 0px; color: white; padding: 2px 5px; background-color: blue;"
-);
 
 var testQuestions = [
   {
@@ -155,6 +151,11 @@ function questionPrompt() {
 //correct and moves on to the next question and if user gets it wrong goes to the next question in array
 function checkAns(selectedAns) {
   if (testQuestions[gIndex].correctAnswer === selectedAns) {
+    if (gIndex == 3) {
+      endQuiz();
+      return;
+    }
+
     gIndex = gIndex + 1;
     h1El.textContent = testQuestions[gIndex].question;
     li1.textContent = testQuestions[gIndex].answers.a;
@@ -167,6 +168,7 @@ function checkAns(selectedAns) {
     li1.textContent = testQuestions[gIndex].answers.a;
     li2.textContent = testQuestions[gIndex].answers.b;
     li3.textContent = testQuestions[gIndex].answers.c;
+    timeLeft - 10;
   }
 }
 
@@ -178,17 +180,17 @@ function start() {
   // starts test
   startBtn.addEventListener("click", function () {
     //TODO: un-comment timer
-    // countdown();
-    // questionPrompt();
+    countdown();
+    questionPrompt();
   });
 }
 start();
 
 var timeLeft;
 function countdown() {
-  timeLeft = 5;
+  timeLeft = 50;
 
-  var timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     if (timeLeft >= 1) {
       timeLeft--;
       timerEl.textContent = timeLeft;
@@ -202,6 +204,7 @@ function countdown() {
   }, 1000);
 }
 
+var timeInterval;
 function endQuiz() {
   //end test screen
   document.body.appendChild(endDiv);
@@ -228,16 +231,26 @@ function endQuiz() {
   li2.setAttribute("style", "display: none;");
   li3.setAttribute("style", "display: none;");
 
+  clearInterval(timeInterval);
   //sets initials to local storage on click
   saveBtn.addEventListener("click", function (event) {
     event.preventDefault();
     if (inputInitials.value !== "") {
-      //element of user initials and score
-      leaderBoardList.appendChild(leaderBoardUser);
       //gets the element created by id called inputInitials and its value and puts it into an array
       var userInitials = document.getElementById("inputInitials").value;
+      inputInitials.value = "";
+      //gets the user initials from the local storage
+      var parsedInitials =
+        JSON.parse(localStorage.getItem("userInitials")) || [];
+      parsedInitials.push(userInitials);
+
+      var parsedTime = JSON.parse(localStorage.getItem("userTime")) || [];
+      parsedTime.push(timeLeft);
+
       //set the userInitials to the local storage
-      localStorage.setItem("user Initials", JSON.stringify(userInitials));
+      localStorage.setItem("userInitials", JSON.stringify(parsedInitials));
+      localStorage.setItem("userTime", JSON.stringify(parsedTime));
+
       renderInitials();
     }
   });
@@ -245,21 +258,21 @@ function endQuiz() {
 
 //this function is responsible for rendering the values stored in local storage
 function renderInitials() {
-  //gets the user initials from the local storage
-  var userInitials = localStorage.getItem("user Initials");
-  //userInitials from local storage is displayed to user in the highscores
-  leaderBoardUser.textContent = userInitials + " -- score";
+  var parsedInitials = JSON.parse(localStorage.getItem("userInitials")) || [];
+  var parsedTime = JSON.parse(localStorage.getItem("userTime")) || [];
+  //iterates through each Initial entered and displays them to the HighScores element
+  for (var i = 0; i < parsedInitials.length && i < parsedTime.length; i++) {
+    var userInitials = parsedInitials[i];
+    var timeLeft = parsedTime[i];
 
-  //
-  for (var i = 0; i < userInitials.length; i++) {
-    var userInitials = userInitials[i];
-
+    //userInitials from local storage is displayed to user in the highscores
+    var leaderBoardUser = document.createElement("li");
+    leaderBoardUser.setAttribute(
+      "style",
+      "border: 1px solid white; text-align:center; margin: 2px 0px; color: white; padding: 2px 5px; background-color: blue;"
+    );
     leaderBoardList.appendChild(leaderBoardUser);
-    leaderBoardUser.textContent = userInitials;
-    leaderBoardUser.setAttribute("data-index", i);
-
-    leaderBoardList.appendChild(leaderBoardUser);
+    leaderBoardUser.textContent =
+      userInitials.toUpperCase().trim() + " -- " + timeLeft;
   }
 }
-
-endQuiz();
