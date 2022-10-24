@@ -13,4 +13,4 @@ This is a Godzilla Themed quiz. Built this whole quiz with only HTML, CSS and Ja
 ![image](https://user-images.githubusercontent.com/100447639/184292651-a3e72e76-018b-468b-8d9b-601200915a0f.png)
 
 ## web link
-!Godzilla-Quiz(https://lardexthelarge.github.io/Code-Quiz/)
+[Godzilla-Quiz](https://lardexthelarge.github.io/Code-Quiz/)
